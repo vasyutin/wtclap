@@ -1,0 +1,8 @@
+Basic Installation
+==================
+
+WTCLAP is a header-only library, so on most modern systems you can
+simply copy the .../include/wtclap directory to your project, or simply
+add .../include to the include path for the compiler. The path prefix
+"..." here refers to the root directory of WTCLAP (i.e., where you
+cloned or extracted it).
