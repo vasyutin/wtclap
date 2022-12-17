@@ -19,13 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\test1.cpp" />
+    <ClCompile Include="..\..\src\test4.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{e1d40269-6dfc-465d-a3bd-5445b183fcbb}</ProjectGuid>
-    <RootNamespace>test1</RootNamespace>
+    <ProjectGuid>{F5B47C87-4DC8-41A1-B613-E2267FF40181}</ProjectGuid>
+    <RootNamespace>test4</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

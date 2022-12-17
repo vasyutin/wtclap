@@ -1,6 +1,6 @@
 // -*- Mode: c++; c-basic-offset: 4; tab-width: 4; -*-
 
-#include "tclap/CmdLine.h"
+#include "wtclap/CmdLine.h"
 #include <iostream>
 #include <string>
 
@@ -8,53 +8,53 @@ using namespace TCLAP;
 using namespace std;
 
 bool _boolTestB;
-string _stringTest;
-string _utest;
-string _ztest;
+wstring _wstringTest;
+wstring _utest;
+wstring _ztest;
 
-void parseOptions(int argc, char **argv);
+void parseOptions(int argc, wchar_t **argv);
 
-int main(int argc, char **argv) {
+int wmain(int argc, wchar_t **argv) {
     parseOptions(argc, argv);
 
-    cout << "for string we got : " << _stringTest << endl
-         << "for ulabeled one we got : " << _utest << endl
-         << "for ulabeled two we got : " << _ztest << endl
-         << "for bool B we got : " << _boolTestB << endl;
+    wcout << L"for wstring we got : " << _wstringTest << endl
+         << L"for ulabeled one we got : " << _utest << endl
+         << L"for ulabeled two we got : " << _ztest << endl
+         << L"for bool B we got : " << _boolTestB << endl;
 }
 
-void parseOptions(int argc, char **argv) {
+void parseOptions(int argc, wchar_t **argv) {
     try {
-        CmdLine cmd("this is a message", '=', "0.99");
+        CmdLine cmd(L"this is a message", L'=', L"0.99");
 
         //
         // Define arguments
         //
 
-        SwitchArg btest("B", "existTestB", "exist Test B", false);
+        SwitchArg btest(L"B", L"existTestB", L"exist Test B", false);
         cmd.add(btest);
 
-        ValueArg<string> stest("", "stringTest", "string test", true, "homer",
-                               "string");
+        ValueArg<wstring> stest(L"", L"wstringTest", L"wstring test", true, L"homer",
+                               L"string");
         cmd.add(stest);
 
-        UnlabeledValueArg<string> utest("unTest1", "unlabeled test one", true,
-                                        "default", "string");
+        UnlabeledValueArg<wstring> utest(L"unTest1", L"unlabeled test one", true,
+                                        L"default", L"string");
         cmd.add(utest);
 
-        UnlabeledValueArg<string> ztest("unTest2", "unlabeled test two", true,
-                                        "default", "string");
+        UnlabeledValueArg<wstring> ztest(L"unTest2", L"unlabeled test two", true,
+                                        L"default", L"string");
         cmd.add(ztest);
 
-        MultiArg<int> itest("i", "intTest", "multi int test", false, "int");
+        MultiArg<int> itest(L"i", L"intTest", L"multi int test", false, L"int");
         cmd.add(itest);
 
-        MultiArg<float> ftest("f", "floatTest", "multi float test", false,
-                              "float");
+        MultiArg<float> ftest(L"f", L"floatTest", L"multi float test", false,
+                              L"float");
         cmd.add(ftest);
 
-        UnlabeledMultiArg<string> mtest("fileName", "file names", false,
-                                        "fileNameString");
+        UnlabeledMultiArg<wstring> mtest(L"fileName", L"file names", false,
+                                        L"fileNamewstring");
         cmd.add(mtest);
         //
         // Parse the command line.
@@ -64,24 +64,24 @@ void parseOptions(int argc, char **argv) {
         //
         // Set variables
         //
-        _stringTest = stest.getValue();
+        _wstringTest = stest.getValue();
         _boolTestB = btest.getValue();
         _utest = utest.getValue();
         _ztest = ztest.getValue();
 
         vector<int> vi = itest.getValue();
         for (int i = 0; static_cast<unsigned int>(i) < vi.size(); i++)
-            cout << "[-i] " << i << "  " << vi[i] << endl;
+            wcout << L"[-i] " << i << L"  " << vi[i] << endl;
 
         vector<float> vf = ftest.getValue();
         for (int i = 0; static_cast<unsigned int>(i) < vf.size(); i++)
-            cout << "[-f] " << i << "  " << vf[i] << endl;
+            wcout << L"[-f] " << i << L"  " << vf[i] << endl;
 
-        vector<string> v = mtest.getValue();
+        vector<wstring> v = mtest.getValue();
         for (int i = 0; static_cast<unsigned int>(i) < v.size(); i++)
-            cout << "[  ] " << i << "  " << v[i] << endl;
+            wcout << L"[  ] " << i << L"  " << v[i] << endl;
 
     } catch (ArgException &e) {
-        cout << "ERROR: " << e.error() << " " << e.argId() << endl;
+        wcout << L"ERROR: " << e.error() << L" " << e.argId() << endl;
     }
 }

@@ -1,6 +1,6 @@
 // -*- Mode: c++; c-basic-offset: 4; tab-width: 4; -*-
 
-#include "tclap/CmdLine.h"
+#include "wtclap/CmdLine.h"
 #include <iostream>
 #include <string>
 
@@ -13,41 +13,41 @@ class MyOutput : public StdOutput {
 public:
     virtual void failure(CmdLineInterface &c, ArgException &e) {
         static_cast<void>(c);  // Ignore input, don't warn
-        cerr << "my failure message: " << endl << e.what() << endl;
+        wcerr << L"my failure message: " << endl << e.what() << endl;
         exit(1);
     }
 
     virtual void usage(CmdLineInterface &c) {
-        cout << "my usage message:" << endl;
+        wcout << L"my usage message:" << endl;
         list<Arg *> args = c.getArgList();
         for (ArgListIterator it = args.begin(); it != args.end(); it++)
-            cout << (*it)->longID() << "  (" << (*it)->getDescription() << ")"
+            wcout << (*it)->longID() << "  (" << (*it)->getDescription() << ")"
                  << endl;
     }
 
     virtual void version(CmdLineInterface &c) {
         static_cast<void>(c);  // Ignore input, don't warn
-        cout << "my version message: 0.1" << endl;
+        wcout << L"my version message: 0.1" << endl;
     }
 };
 
 bool _boolTestB;
 bool _boolTestA;
-string _stringTest;
+wstring _stringTest;
 
-void parseOptions(int argc, char **argv);
+void parseOptions(int argc, wchar_t **argv);
 
-int main(int argc, char **argv) {
+int wmain(int argc, wchar_t **argv) {
     parseOptions(argc, argv);
 
-    cout << "for string we got : " << _stringTest << endl
-         << "for bool B we got : " << _boolTestB << endl
-         << "for bool A we got : " << _boolTestA << endl;
+    wcout << L"for string we got : " << _stringTest << endl
+         << L"for bool B we got : " << _boolTestB << endl
+         << L"for bool A we got : " << _boolTestA << endl;
 }
 
-void parseOptions(int argc, char **argv) {
+void parseOptions(int argc, wchar_t **argv) {
     try {
-        CmdLine cmd("this is a message", ' ', "0.99");
+        CmdLine cmd(L"this is a message", L' ', L"0.99");
 
         // set the output
         MyOutput my;
@@ -57,11 +57,11 @@ void parseOptions(int argc, char **argv) {
         // Define arguments
         //
 
-        SwitchArg btest("B", "sB", "exist Test B", false);
-        SwitchArg atest("A", "sA", "exist Test A", false);
+        SwitchArg btest(L"B", L"sB", L"exist Test B", false);
+        SwitchArg atest(L"A", L"sA", L"exist Test A", false);
 
-        ValueArg<string> stest("s", "Bs", "string test", true, "homer",
-                               "string");
+        ValueArg<wstring> stest(L"s", L"Bs", L"string test", true, L"homer",
+                               L"string");
         cmd.add(stest);
         cmd.add(btest);
         cmd.add(atest);
@@ -79,6 +79,6 @@ void parseOptions(int argc, char **argv) {
         _boolTestA = atest.getValue();
 
     } catch (ArgException &e) {
-        cout << "ERROR: " << e.error() << " " << e.argId() << endl;
+        wcout << L"ERROR: " << e.error() << " " << e.argId() << endl;
     }
 }
