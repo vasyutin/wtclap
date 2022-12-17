@@ -7,7 +7,6 @@
  *  Copyright (c) 2003, Michael E. Smoot .
  *  Copyright (c) 2004, Michael E. Smoot, Daniel Aarno.
  *  Copyright (c) 2018, Google LLC
- *  Copyright (c) 2022 Sergey Vasyutin .
  *  All rights reserved.
  *
  *  See the file COPYING in the top directory of this distribution for
@@ -26,23 +25,23 @@
 #ifndef TCLAP_CMD_LINE_H
 #define TCLAP_CMD_LINE_H
 
-#include <wtclap/MultiSwitchArg.h>
-#include <wtclap/SwitchArg.h>
-#include <wtclap/UnlabeledMultiArg.h>
-#include <wtclap/UnlabeledValueArg.h>
+#include <tclap/MultiSwitchArg.h>
+#include <tclap/SwitchArg.h>
+#include <tclap/UnlabeledMultiArg.h>
+#include <tclap/UnlabeledValueArg.h>
 
-#include <wtclap/HelpVisitor.h>
-#include <wtclap/IgnoreRestVisitor.h>
-#include <wtclap/VersionVisitor.h>
+#include <tclap/HelpVisitor.h>
+#include <tclap/IgnoreRestVisitor.h>
+#include <tclap/VersionVisitor.h>
 
-#include <wtclap/CmdLineOutput.h>
-#include <wtclap/StdOutput.h>
+#include <tclap/CmdLineOutput.h>
+#include <tclap/StdOutput.h>
 
-#include <wtclap/Constraint.h>
-#include <wtclap/ValuesConstraint.h>
+#include <tclap/Constraint.h>
+#include <tclap/ValuesConstraint.h>
 
-#include <wtclap/ArgGroup.h>
-#include <wtclap/DeferDelete.h>
+#include <tclap/ArgGroup.h>
+#include <tclap/DeferDelete.h>
 
 #include <algorithm>
 #include <cstdlib>
@@ -63,7 +62,7 @@ public:
         for (iterator it = begin(); it != end(); it++) {
             if (*arg == **it) {
                 throw SpecificationException(
-                    L"Argument with same flag/name already exists!",
+                    "Argument with same flag/name already exists!",
                     arg->longID());
             }
         }
@@ -100,17 +99,17 @@ protected:
     /**
      * The name of the program.  Set to argv[0].
      */
-    std::wstring _progName;
+    std::string _progName;
 
     /**
      * A message used to describe the program.  Used in the usage output.
      */
-    std::wstring _message;
+    std::string _message;
 
     /**
      * The version to be displayed with the --version switch.
      */
-    std::wstring _version;
+    std::string _version;
 
     /**
      * The number of arguments that are required to be present on
@@ -123,7 +122,7 @@ protected:
      * The character that is used to separate the argument flag/name
      * from the value.  Defaults to ' ' (space).
      */
-    wchar_t _delimiter;
+    char _delimiter;
 
     /**
      * Add pointers that should be deleted as part of cleanup when
@@ -158,7 +157,7 @@ protected:
      * into a single argument.
      * \param s - The message to be used in the usage.
      */
-    bool _emptyCombined(const std::wstring &s);
+    bool _emptyCombined(const std::string &s);
 
 private:
     /**
@@ -201,8 +200,8 @@ public:
      * \param helpAndVersion - Whether or not to create the Help and
      * Version switches. Defaults to true.
      */
-    CmdLine(const std::wstring &message, const wchar_t delimiter = L' ',
-            const std::wstring &version = L"none", bool helpAndVersion = true);
+    CmdLine(const std::string &message, const char delimiter = ' ',
+            const std::string &version = "none", bool helpAndVersion = true);
 
     /**
      * Deletes any resources allocated by a CmdLine object.
@@ -255,20 +254,20 @@ public:
      * \param argc - Number of arguments.
      * \param argv - Array of arguments.
      */
-    void parse(int argc, const wchar_t *const *argv);
+    void parse(int argc, const char *const *argv);
 
     /**
      * Parses the command line.
      * \param args - A vector of strings representing the args.
      * args[0] is still the program name.
      */
-    void parse(std::vector<std::wstring> &args);
+    void parse(std::vector<std::string> &args);
 
     void setOutput(CmdLineOutput *co);
 
-    std::wstring getVersion() const { return _version; }
+    std::string getVersion() const { return _version; }
 
-    std::wstring getProgramName() const { return _progName; }
+    std::string getProgramName() const { return _progName; }
 
     // TOOD: Get rid of getArgList
     std::list<Arg *> getArgList() const { return _argList; }
@@ -278,8 +277,8 @@ public:
         return groups;
     }
 
-    wchar_t getDelimiter() const { return _delimiter; }
-    std::wstring getMessage() const { return _message; }
+    char getDelimiter() const { return _delimiter; }
+    std::string getMessage() const { return _message; }
     bool hasHelpAndVersion() const { return _helpAndVersion; }
 
     /**
@@ -318,13 +317,13 @@ public:
 // Begin CmdLine.cpp
 ///////////////////////////////////////////////////////////////////////////////
 
-inline CmdLine::CmdLine(const std::wstring &m, wchar_t delim, const std::wstring &v,
+inline CmdLine::CmdLine(const std::string &m, char delim, const std::string &v,
                         bool help)
     : _argList(),
       _standaloneArgs(),
       _autoArgs(),
       _argGroups(),
-      _progName(L"not_set_yet"),
+      _progName("not_set_yet"),
       _message(m),
       _version(v),
       _numRequired(0),
@@ -350,7 +349,7 @@ inline void CmdLine::_constructor() {
     v = new IgnoreRestVisitor(*this);
     SwitchArg *ignore = new SwitchArg(
         Arg::flagStartString(), Arg::ignoreNameString(),
-        L"Ignores the rest of the labeled arguments following this flag.", false,
+        "Ignores the rest of the labeled arguments following this flag.", false,
         v);
     _deleteOnExit(ignore);
     _deleteOnExit(v);
@@ -360,13 +359,13 @@ inline void CmdLine::_constructor() {
     if (_helpAndVersion) {
         v = new HelpVisitor(this, &_output);
         SwitchArg *help = new SwitchArg(
-            L"h", L"help", L"Displays usage information and exits.", false, v);
+            "h", "help", "Displays usage information and exits.", false, v);
         _deleteOnExit(help);
         _deleteOnExit(v);
 
         v = new VersionVisitor(this, &_output);
         SwitchArg *vers = new SwitchArg(
-            L"", L"version", L"Displays version information and exits.", false, v);
+            "", "version", "Displays version information and exits.", false, v);
         _deleteOnExit(vers);
         _deleteOnExit(v);
 
@@ -411,7 +410,7 @@ inline void CmdLine::addToArgList(Arg *a) {
     for (ArgListIterator it = _argList.begin(); it != _argList.end(); it++)
         if (*a == *(*it))
             throw(SpecificationException(
-                L"Argument with same flag/name already exists!", a->longID()));
+                "Argument with same flag/name already exists!", a->longID()));
 
     a->addToList(_argList);
 
@@ -425,16 +424,16 @@ inline ArgContainer &CmdLine::add(Arg *a) {
     return *this;
 }
 
-inline void CmdLine::parse(int argc, const wchar_t *const *argv) {
+inline void CmdLine::parse(int argc, const char *const *argv) {
     // this step is necessary so that we have easy access to
     // mutable strings.
-    std::vector<std::wstring> args;
+    std::vector<std::string> args;
     for (int i = 0; i < argc; i++) args.push_back(argv[i]);
 
     parse(args);
 }
 
-inline void CmdLine::parse(std::vector<std::wstring> &args) {
+inline void CmdLine::parse(std::vector<std::string> &args) {
     bool shouldExit = false;
     int estat = 0;
 
@@ -442,9 +441,9 @@ inline void CmdLine::parse(std::vector<std::wstring> &args) {
         if (args.empty()) {
             // https://sourceforge.net/p/tclap/bugs/30/
             throw CmdLineParseException(
-                L"The args vector must not be empty, "
-                L"the first entry should contain the "
-                L"program's name.");
+                "The args vector must not be empty, "
+                "the first entry should contain the "
+                "program's name.");
         }
 
         // TODO(macbishop): Maybe store the full name somewhere?
@@ -496,8 +495,8 @@ inline void CmdLine::parse(std::vector<std::wstring> &args) {
 
             if (!matched && !ignoreRest() && !_ignoreUnmatched)
                 throw(
-                    CmdLineParseException(L"Couldn't find match "
-                                          L"for argument",
+                    CmdLineParseException("Couldn't find match "
+                                          "for argument",
                                           args[i]));
         }
 
@@ -516,7 +515,7 @@ inline void CmdLine::parse(std::vector<std::wstring> &args) {
         }
 
         if (requiredCount > _numRequired) {
-            throw(CmdLineParseException(L"Too many arguments!"));
+            throw(CmdLineParseException("Too many arguments!"));
         }
     } catch (ArgException &e) {
         // If we're not handling the exceptions, rethrow.
@@ -543,7 +542,7 @@ inline void CmdLine::parse(std::vector<std::wstring> &args) {
     if (shouldExit) exit(estat);
 }
 
-inline bool CmdLine::_emptyCombined(const std::wstring &s) {
+inline bool CmdLine::_emptyCombined(const std::string &s) {
     if (s.length() > 0 && s[0] != Arg::flagStartChar()) return false;
 
     for (int i = 1; static_cast<unsigned int>(i) < s.length(); i++)
@@ -556,11 +555,11 @@ inline void CmdLine::missingArgsException(
     const std::list<ArgGroup *> &missing) {
     int count = 0;
 
-    std::wstring missingArgList;
+    std::string missingArgList;
     for (ArgListIterator it = _argList.begin(); it != _argList.end(); it++) {
         if ((*it)->isRequired() && !(*it)->isSet()) {
             missingArgList += (*it)->getName();
-            missingArgList += L", ";
+            missingArgList += ", ";
             count++;
         }
     }
@@ -568,17 +567,17 @@ inline void CmdLine::missingArgsException(
     for (std::list<ArgGroup *>::const_iterator it = missing.begin();
          it != missing.end(); it++) {
         missingArgList += (*it)->getName();
-        missingArgList += L", ";
+        missingArgList += ", ";
         count++;
     }
 
     missingArgList = missingArgList.substr(0, missingArgList.length() - 2);
 
-    std::wstring msg;
+    std::string msg;
     if (count > 1)
-        msg = L"Required arguments missing: ";
+        msg = "Required arguments missing: ";
     else
-        msg = L"Required argument missing: ";
+        msg = "Required argument missing: ";
 
     msg += missingArgList;
 
@@ -608,9 +607,5 @@ inline void CmdLine::ignoreUnmatched(const bool ignore) {
 ///////////////////////////////////////////////////////////////////////////////
 
 }  // namespace TCLAP
-
-#define TCLAP_TO_WSTRING(S_) L ## S_
-#define TCLAP_STR(S_) TCLAP_TO_WSTRING(S_)
-#define TCLAP_CHAR(S_) TCLAP_TO_WSTRING(S_)
 
 #endif  // TCLAP_CMD_LINE_H

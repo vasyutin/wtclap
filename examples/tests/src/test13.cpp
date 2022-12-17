@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-#include <tclap/CmdLine.h>
+#include <wtclap/CmdLine.h>
 
 using namespace TCLAP;
 
@@ -22,32 +22,32 @@ using namespace TCLAP;
 //
 int main() {
     try {
-        CmdLine cmd("Test", ' ', "not versioned", true);
+        CmdLine cmd(L"Test", L' ', L"not versioned", true);
 
-        MultiArg<std::string> Arg("X", "fli", "fli module", false, "string");
+        MultiArg<std::wstring> Arg(L"X", L"fli", L"fli module", false, L"string");
         cmd.add(Arg);
-        MultiSwitchArg ArgMultiSwitch("d", "long_d", "example");
+        MultiSwitchArg ArgMultiSwitch(L"d", L"long_d", L"example");
         cmd.add(ArgMultiSwitch);
 
-        std::vector<std::string> in;
-        in.push_back("prog name");
-        in.push_back("-X module");
+        std::vector<std::wstring> in;
+        in.push_back(L"prog name");
+        in.push_back(L"-X module");
         cmd.parse(in);
 
-        std::vector<std::string> s = Arg.getValue();
+        std::vector<std::wstring> s = Arg.getValue();
         for (unsigned int i = 0; i < s.size(); i++) {
-            std::cout << s[i] << "\n";
+            std::wcout << s[i] << L"\n";
         }
-        std::cout << "MultiSwtichArg was found " << ArgMultiSwitch.getValue()
-                  << " times.\n";
+        std::wcout << L"MultiSwtichArg was found " << ArgMultiSwitch.getValue()
+                  << L" times.\n";
 
     } catch (ArgException &e)  // catch any exceptions
     {
-        std::cerr << "error: " << e.error() << " for arg " << e.argId()
+        std::wcerr << L"error: " << e.error() << L" for arg " << e.argId()
                   << std::endl;
     }
 
-    std::cout << "done...\n";
+    std::wcout << L"done...\n";
 
     return 0;
 }

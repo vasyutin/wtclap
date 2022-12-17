@@ -1,4 +1,6 @@
 # WTCLAP 1.0
 
-The version of TCLAP (Templatized Command Line Argument Parser) 
-for unicode strings (std::wstring). Based on TCLAP 1.4.
+This is the first release of WTCLAP (Wide Templatized Command Line 
+Argument Parser). It is based on TCLAP 1.4 (Templatized Command Line 
+Argument Parser). The original library was modified to support wide 
+(Unicode) strings (std::wstring).
