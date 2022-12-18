@@ -2,18 +2,18 @@
 
 #define TCLAP_SETBASE_ZERO 1
 
-#include "tclap/CmdLine.h"
+#include "wtclap/CmdLine.h"
 #include <iostream>
 #include <string>
 
 using namespace TCLAP;
 using namespace std;
 
-int main(int argc, char **argv) {
+int wmain(int argc, wchar_t **argv) {
     try {
-        CmdLine cmd("this is a message", ' ', "0.99");
+        CmdLine cmd(L"this is a message", L' ', L"0.99");
 
-        ValueArg<int> itest("i", "intTest", "integer test", true, 5, "int");
+        ValueArg<int> itest(L"i", L"intTest", L"integer test", true, 5, L"int");
         cmd.add(itest);
 
         //
@@ -25,9 +25,9 @@ int main(int argc, char **argv) {
         // Set variables
         //
         int _intTest = itest.getValue();
-        cout << "found int: " << _intTest << endl;
+        wcout << L"found int: " << _intTest << endl;
 
     } catch (ArgException &e) {
-        cout << "ERROR: " << e.error() << " " << e.argId() << endl;
+        wcout << L"ERROR: " << e.error() << " " << e.argId() << endl;
     }
 }
