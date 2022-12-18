@@ -1,6 +1,6 @@
 // -*- Mode: c++; c-basic-offset: 4; tab-width: 4; -*-
 
-#include "tclap/CmdLine.h"
+#include "wtclap/CmdLine.h"
 #include <iterator>
 #include <algorithm>
 
@@ -14,8 +14,8 @@ struct ArgTraits<std::vector<double> > {
 
 template <>
 void SetString<std::vector<double> >(std::vector<double> &v,
-                                     const std::string &s) {
-    std::istringstream iss(s);
+                                     const std::wstring &s) {
+    std::wistringstream iss(s);
     while (iss) {
         double tmp;
         iss >> tmp;
@@ -24,10 +24,10 @@ void SetString<std::vector<double> >(std::vector<double> &v,
 }
 }
 
-int main(int argc, char *argv[]) {
-    TCLAP::CmdLine cmd("Command description message", ' ', "0.9");
+int wmain(int argc, wchar_t *argv[]) {
+    TCLAP::CmdLine cmd(L"Command description message", L' ', L"0.9");
     TCLAP::ValueArg<std::vector<double> > vec(
-        "v", "vect", "vector", true, std::vector<double>(), "3D vector", cmd);
+        L"v", L"vect", L"vector", true, std::vector<double>(), L"3D vector", cmd);
     try {
         cmd.parse(argc, argv);
     } catch (std::exception &e) {
@@ -37,6 +37,6 @@ int main(int argc, char *argv[]) {
 
     const std::vector<double> &v = vec.getValue();
     std::copy(v.begin(), v.end(),
-              std::ostream_iterator<double>(std::cout, "\n"));
-    std::cout << std::endl;
+              std::ostream_iterator<double, wchar_t>(std::wcout, L"\n"));
+    std::wcout << std::endl;
 }
