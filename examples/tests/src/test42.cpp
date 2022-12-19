@@ -16,7 +16,7 @@
  *
  *****************************************************************************/
 
-#include "tclap/CmdLine.h"
+#include "wtclap/CmdLine.h"
 
 using namespace TCLAP;
 /**
@@ -34,30 +34,30 @@ using namespace TCLAP;
  * "usage: f [-aDde] [-b b_arg] [-m m_arg] req1 req2 [opt1 [opt2]]\n"
  * "usage: f [-a | -b] [-c [-de] [-n number]]\n"
  */
-int main(int argc, char **argv) {
+int wmain(int argc, wchar_t **argv) {
     try {
         // "usage: f [-a | -b] [-c [-de] [-n number]]\n"
-        CmdLine cmd("");
+        CmdLine cmd(L"");
         EitherOf aorb(cmd);
-        SwitchArg a("a", "aopt", "a", aorb);
-        SwitchArg b("b", "bopt", "b", aorb);
+        SwitchArg a(L"a", L"aopt", L"a", aorb);
+        SwitchArg b(L"b", L"bopt", L"b", aorb);
 
         AnyOf other(cmd);
-        SwitchArg c("c", "copt", "c", other);
-        SwitchArg d("d", "dopt", "d", other);
-        SwitchArg e("e", "eopt", "e", other);
-        ValueArg<int> n_arg("n", "narg", "n_arg", false, 4711, "number", other);
+        SwitchArg c(L"c", L"copt", L"c", other);
+        SwitchArg d(L"d", L"dopt", L"d", other);
+        SwitchArg e(L"e", L"eopt", L"e", other);
+        ValueArg<int> n_arg(L"n", L"narg", L"n_arg", false, 4711, L"number", other);
 
         OneOf x(cmd);
-        SwitchArg f("f", "fopt", "f", x);
-        SwitchArg g("", "gopt", "g", x);
+        SwitchArg f(L"f", L"fopt", L"f", x);
+        SwitchArg g(L"", L"gopt", L"g", x);
 
-        UnlabeledValueArg<int> req1("req1", "req_1", true, 47, "int", cmd);
+        UnlabeledValueArg<int> req1(L"req1", L"req_1", true, 47, L"int", cmd);
 
         cmd.parse(argc, argv);
 
     } catch (SpecificationException &e) {
         // Expected
-        std::cout << e.what() << std::endl;
+        std::wcout << e.what() << std::endl;
     }
 }

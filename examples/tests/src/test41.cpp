@@ -16,7 +16,7 @@
  *
  *****************************************************************************/
 
-#include "tclap/CmdLine.h"
+#include "wtclap/CmdLine.h"
 
 using namespace TCLAP;
 /**
@@ -34,27 +34,27 @@ using namespace TCLAP;
  * "usage: f [-aDde] [-b b_arg] [-m m_arg] req1 req2 [opt1 [opt2]]\n"
  * "usage: f [-a | -b] [-c [-de] [-n number]]\n"
  */
-int main(int argc, char **argv) {
+int wmain(int argc, wchar_t **argv) {
     try {
         // "usage: f [-aDde] [-b b_arg] [-m m_arg] req1 req2 [opt1 [opt2]]\n"
-        CmdLine cmd("");
-        SwitchArg a("a", "aopt", "a", cmd);
-        SwitchArg d("d", "dopt", "d", cmd);
-        SwitchArg D("D", "Dopt", "D", cmd);
-        SwitchArg e("e", "eopt", "e", cmd);
-        ValueArg<int> b_arg("b", "barg", "Desc b_arg", false, 4711, "b_arg",
+        CmdLine cmd(L"");
+        SwitchArg a(L"a", L"aopt", L"a", cmd);
+        SwitchArg d(L"d", L"dopt", L"d", cmd);
+        SwitchArg D(L"D", L"Dopt", L"D", cmd);
+        SwitchArg e(L"e", L"eopt", L"e", cmd);
+        ValueArg<int> b_arg(L"b", L"barg", L"Desc b_arg", false, 4711, L"b_arg",
                             cmd);
-        ValueArg<std::string> m_arg("m", "marg", "Desc m_arg", false, "foo",
-                                    "m_arg", cmd);
-        UnlabeledValueArg<int> req1("req1", "req_1", true, 47, "int", cmd);
-        UnlabeledValueArg<std::string> req2("req2", "req_2", true, "bar", "str",
+        ValueArg<std::wstring> m_arg(L"m", L"marg", L"Desc m_arg", false, L"foo",
+                                    L"m_arg", cmd);
+        UnlabeledValueArg<int> req1(L"req1", L"req_1", true, 47, L"int", cmd);
+        UnlabeledValueArg<std::wstring> req2(L"req2", L"req_2", true, L"bar", L"str",
                                             cmd);
-        UnlabeledMultiArg<int> opt1("opt1", "opt_1", false, "int", cmd);
+        UnlabeledMultiArg<int> opt1(L"opt1", L"opt_1", false, L"int", cmd);
 
         cmd.parse(argc, argv);
 
     } catch (SpecificationException &e) {
         // Expected
-        std::cout << e.what() << std::endl;
+        std::wcout << e.wwhat() << std::endl;
     }
 }

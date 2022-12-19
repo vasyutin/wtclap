@@ -22,15 +22,15 @@
  *
  *****************************************************************************/
 
-#include "tclap/CmdLine.h"
+#include "wtclap/CmdLine.h"
 
 using namespace TCLAP;
 
-int main(int argc, char **argv) {
-    CmdLine cmd("");
-    ValueArg<int> arg0("a", "a_int", "first int arg", false, 4711, "int");
-    ValueArg<int> arg1("b", "b_int", "second int arg", false, 4711, "int");
-    ValueArg<std::string> arg2("s", "str", "string arg", false, "foo", "str");
+int wmain(int argc, wchar_t **argv) {
+    CmdLine cmd(L"");
+    ValueArg<int> arg0(L"a", L"a_int", L"first int arg", false, 4711, L"int");
+    ValueArg<int> arg1(L"b", L"b_int", L"second int arg", false, 4711, L"int");
+    ValueArg<std::wstring> arg2(L"s", L"str", L"string arg", false, L"foo", L"str");
 
     OneOf input;
     input.add(arg0).add(arg1).add(arg2);
@@ -39,12 +39,12 @@ int main(int argc, char **argv) {
     cmd.parse(argc, argv);
 
     if (arg0.isSet()) {
-        std::cout << "a_int was set to: " << arg0.getValue() << std::endl;
+        std::wcout << L"a_int was set to: " << arg0.getValue() << std::endl;
     }
     if (arg1.isSet()) {
-        std::cout << "b_int was set to: " << arg1.getValue() << std::endl;
+        std::wcout << L"b_int was set to: " << arg1.getValue() << std::endl;
     }
     if (arg2.isSet()) {
-        std::cout << "str was set to: " << arg2.getValue() << std::endl;
+        std::wcout << L"str was set to: " << arg2.getValue() << std::endl;
     }
 }

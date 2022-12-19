@@ -1,3 +1,7 @@
+# WTCLAP 1.0.1
+
+Added example of using TCLAP and WTCLAP together in one source file.
+
 # WTCLAP 1.0
 
 This is the first release of WTCLAP (Wide Templatized Command Line 

@@ -1,22 +1,22 @@
 // -*- Mode: c++; c-basic-offset: 4; tab-width: 4; -*-
 
-#include "tclap/CmdLine.h"
-#include "tclap/DocBookOutput.h"
+#include "wtclap/CmdLine.h"
+#include "wtclap/DocBookOutput.h"
 #include <iostream>
 #include <string>
 
 using namespace TCLAP;
 using namespace std;
 
-int main(int argc, char **argv) {
-    CmdLine cmd("this is a message", ' ', "0.99");
+int wmain(int argc, wchar_t **argv) {
+    CmdLine cmd(L"this is a message", L' ', L"0.99");
     DocBookOutput docoutput;
     cmd.setOutput(&docoutput);
 
-    SwitchArg btest("B", "sB", "exist Test B", false);
-    MultiArg<int> atest("A", "sA", "exist Test A", false, "integer");
+    SwitchArg btest(L"B", L"sB", L"exist Test B", false);
+    MultiArg<int> atest(L"A", L"sA", L"exist Test A", false, L"integer");
 
-    ValueArg<string> stest("s", "Bs", "string test", false, "homer", "string");
+    ValueArg<wstring> stest(L"s", L"Bs", L"string test", false, L"homer", L"string");
 
     cmd.xorAdd(stest, btest);
     cmd.add(atest);

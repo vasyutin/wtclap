@@ -22,22 +22,22 @@
  *
  *****************************************************************************/
 
-#include "tclap/CmdLine.h"
+#include "wtclap/CmdLine.h"
 
 using namespace TCLAP;
 
-int main() {
+int wmain() {
     try {
-        CmdLine cmd("");
+        CmdLine cmd(L"");
         OneOf input(cmd);
-        ValueArg<int> arg0("a", "a_int", "first int arg", false, 4711, "int",
+        ValueArg<int> arg0(L"a", L"a_int", L"first int arg", false, 4711, L"int",
                            input);
-        ValueArg<int> arg1("b", "b_int", "second int arg", false, 4711, "int",
+        ValueArg<int> arg1(L"b", L"b_int", L"second int arg", false, 4711, L"int",
                            input);
-        ValueArg<int> arg2("a", "a_int", "second int arg", false, 4711, "int",
+        ValueArg<int> arg2(L"a", L"a_int", L"second int arg", false, 4711, L"int",
                            input);
     } catch (SpecificationException &e) {
         // Expected
-        std::cout << e.what() << std::endl;
+        std::wcout << e.what() << std::endl;
     }
 }

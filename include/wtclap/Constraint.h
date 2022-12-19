@@ -68,7 +68,7 @@ public:
     static std::wstring shortID(Constraint<T> *constraint) {
         if (!constraint)
             throw std::logic_error(
-                L"Cannot create a ValueArg with a NULL constraint");
+                "Cannot create a ValueArg with a NULL constraint");
         return constraint->shortID();
     }
 };

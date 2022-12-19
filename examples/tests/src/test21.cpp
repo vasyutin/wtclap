@@ -2,49 +2,49 @@
 
 // This illustrates how to change the flag and name start strings.
 // Note that these defines need to happen *before* tclap is included!
-#define TCLAP_NAMESTARTSTRING "~~"
-#define TCLAP_FLAGSTARTSTRING "/"
+#define TCLAP_NAMESTARTSTRING L"~~"
+#define TCLAP_FLAGSTARTSTRING L"/"
 
 #include <string>
 #include <iostream>
 #include <algorithm>
-#include "tclap/CmdLine.h"
+#include "wtclap/CmdLine.h"
 
 using namespace TCLAP;
 using namespace std;
 
-int main(int argc, char **argv) {
+int wmain(int argc, wchar_t **argv) {
     // Wrap everything in a try block.  Do this every time,
     // because exceptions will be thrown for problems.
     try {
         // Define the command line object.
-        CmdLine cmd("Command description message", ' ', "0.9");
+        CmdLine cmd(L"Command description message", L' ', L"0.9");
 
         // Define a value argument and add it to the command line.
-        ValueArg<string> nameArg("n", "name", "Name to print", true, "homer",
-                                 "string");
+        ValueArg<wstring> nameArg(L"n", L"name", L"Name to print", true, L"homer",
+                                 L"string");
         cmd.add(nameArg);
 
         // Define a switch and add it to the command line.
-        SwitchArg reverseSwitch("r", "reverse", "Print name backwards", false);
+        SwitchArg reverseSwitch(L"r", L"reverse", L"Print name backwards", false);
         cmd.add(reverseSwitch);
 
         // Parse the args.
         cmd.parse(argc, argv);
 
         // Get the value parsed by each arg.
-        string name = nameArg.getValue();
+        wstring name = nameArg.getValue();
         bool reverseName = reverseSwitch.getValue();
 
         // Do what you intend too...
         if (reverseName) {
             reverse(name.begin(), name.end());
-            cout << "My name (spelled backwards) is: " << name << endl;
+            wcout << L"My name (spelled backwards) is: " << name << endl;
         } else
-            cout << "My name is: " << name << endl;
+            wcout << L"My name is: " << name << endl;
 
     } catch (ArgException &e)  // catch any exceptions
     {
-        cerr << "error: " << e.error() << " for arg " << e.argId() << endl;
+        wcerr << L"error: " << e.error() << L" for arg " << e.argId() << endl;
     }
 }

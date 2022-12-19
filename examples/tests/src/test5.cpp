@@ -1,59 +1,59 @@
 // -*- Mode: c++; c-basic-offset: 4; tab-width: 4; -*-
 
-#include "tclap/CmdLine.h"
+#include "wtclap/CmdLine.h"
 #include <iostream>
 #include <string>
 
 using namespace TCLAP;
 using namespace std;
 
-string _orTest;
-string _orTest2;
-string _testc;
+wstring _orTest;
+wstring _orTest2;
+wstring _testc;
 bool _testd;
 
-void parseOptions(int argc, char **argv);
+void parseOptions(int argc, wchar_t **argv);
 
-int main(int argc, char **argv) {
+int wmain(int argc, wchar_t **argv) {
     parseOptions(argc, argv);
 
-    cout << "for A OR B we got : " << _orTest << endl
-         << "for string C we got : " << _testc << endl
-         << "for string D we got : " << _testd << endl
-         << "for E or F or G we got: " << _orTest2 << endl;
+    wcout << L"for A OR B we got : " << _orTest << endl
+         << L"for string C we got : " << _testc << endl
+         << L"for string D we got : " << _testd << endl
+         << L"for E or F or G we got: " << _orTest2 << endl;
 }
 
-void parseOptions(int argc, char **argv) {
+void parseOptions(int argc, wchar_t **argv) {
     try {
-        CmdLine cmd("this is a message", ' ', "0.99");
+        CmdLine cmd(L"this is a message", L' ', L"0.99");
 
         //
         // Define arguments
         //
 
-        ValueArg<string> atest("a", "aaa", "or test a", false, "homer",
-                               "string");
-        ValueArg<string> btest("b", "bbb", "or test b", false, "homer",
-                               "string");
+        ValueArg<wstring> atest(L"a", L"aaa", L"or test a", false, L"homer",
+                               L"string");
+        ValueArg<wstring> btest(L"b", L"bbb", L"or test b", false, L"homer",
+                               L"string");
         cmd.xorAdd(atest, btest);
 
-        ValueArg<string> ctest("c", "ccc", "c test", true, "homer", "string");
+        ValueArg<wstring> ctest(L"c", L"ccc", L"c test", true, L"homer", L"string");
         cmd.add(ctest);
 
-        SwitchArg dtest("", "ddd", "d test", false);
+        SwitchArg dtest(L"", L"ddd", L"d test", false);
         cmd.add(dtest);
 
-        ValueArg<string> etest("", "eee", "e test", false, "homer", "string");
-        ValueArg<string> ftest("", "fff", "f test", false, "homer", "string");
-        ValueArg<string> gtest("g", "ggg", "g test", false, "homer", "string");
+        ValueArg<wstring> etest(L"", L"eee", L"e test", false, L"homer", L"string");
+        ValueArg<wstring> ftest(L"", L"fff", L"f test", false, L"homer", L"string");
+        ValueArg<wstring> gtest(L"g", L"ggg", L"g test", false, L"homer", L"string");
         vector<Arg *> xorlist;
         xorlist.push_back(&etest);
         xorlist.push_back(&ftest);
         xorlist.push_back(&gtest);
         cmd.xorAdd(xorlist);
 
-        MultiArg<string> itest("i", "iii", "or test i", false, "string");
-        MultiArg<string> jtest("j", "jjj", "or test j", false, "string");
+        MultiArg<wstring> itest(L"i", L"iii", L"or test i", false, L"string");
+        MultiArg<wstring> jtest(L"j", L"jjj", L"or test j", false, L"string");
         cmd.xorAdd(itest, jtest);
 
         //
@@ -72,7 +72,7 @@ void parseOptions(int argc, char **argv) {
         else
             // Should never get here because TCLAP will note that one of the
             // required args above has not been set.
-            throw("very bad things...");
+            throw(L"very bad things...");
 
         _testc = ctest.getValue();
         _testd = dtest.getValue();
@@ -84,22 +84,22 @@ void parseOptions(int argc, char **argv) {
         else if (gtest.isSet())
             _orTest2 = gtest.getValue();
         else
-            throw("still bad");
+            throw(L"still bad");
 
         if (jtest.isSet()) {
-            cout << "for J:" << endl;
-            vector<string> v = jtest.getValue();
+            wcout << L"for J:" << endl;
+            vector<wstring> v = jtest.getValue();
             for (int z = 0; static_cast<unsigned int>(z) < v.size(); z++)
-                cout << " " << z << "  " << v[z] << endl;
+                wcout << L" " << z << L"  " << v[z] << endl;
         } else if (itest.isSet()) {
-            cout << "for I:" << endl;
-            vector<string> v = itest.getValue();
+            wcout << L"for I:" << endl;
+            vector<wstring> v = itest.getValue();
             for (int z = 0; static_cast<unsigned int>(z) < v.size(); z++)
-                cout << " " << z << "  " << v[z] << endl;
+                wcout << L" " << z << L"  " << v[z] << endl;
         } else
-            throw("yup, still bad");
+            throw(L"yup, still bad");
 
     } catch (ArgException &e) {
-        cout << "ERROR: " << e.error() << " " << e.argId() << endl;
+        wcout << L"ERROR: " << e.error() << L" " << e.argId() << endl;
     }
 }

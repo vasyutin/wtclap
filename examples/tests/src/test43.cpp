@@ -2,24 +2,24 @@
 //
 // Test that xor args can't be required
 
-#include "tclap/CmdLine.h"
+#include "wtclap/CmdLine.h"
 
 using namespace TCLAP;
 using namespace std;
 
-int main(int argc, char **argv) {
+int wmain(int argc, wchar_t **argv) {
     try {
-        CmdLine cmd("this is a message", ' ', "0.99");
+        CmdLine cmd(L"this is a message", L' ', L"0.99");
 
-        ValueArg<string> atest("a", "aaa", "or test a", true, "homer",
-                               "string");
-        ValueArg<string> btest("b", "bbb", "or test b", false, "homer",
-                               "string");
+        ValueArg<wstring> atest(L"a", L"aaa", L"or test a", true, L"homer",
+                               L"string");
+        ValueArg<wstring> btest(L"b", L"bbb", L"or test b", false, L"homer",
+                               L"string");
         cmd.xorAdd(atest, btest);
 
         cmd.parse(argc, argv);
     } catch (SpecificationException &e) {
-        std::cout << "Caught SpecificationException: " << e.what() << std::endl;
+        std::wcout << L"Caught SpecificationException: " << e.what() << std::endl;
         return 0;
     }
 

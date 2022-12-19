@@ -3,20 +3,20 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
-#include <tclap/CmdLine.h>
+#include <wtclap/CmdLine.h>
 
 using namespace TCLAP;
 using namespace std;
 
-int main(int argc, char **argv) {
+int wmain(int argc, wchar_t **argv) {
     // Wrap everything in a try block.  Do this every time,
     // because exceptions will be thrown for problems.
     try {
         // Define the command line object.
-        CmdLine cmd("Command description message", '=', "0.9");
+        CmdLine cmd(L"Command description message", L'=', L"0.9");
 
-        SwitchArg atmcSwitch("a", "atmc", "aContinuous time semantics", false);
-        SwitchArg btmcSwitch("b", "btmc", "bDiscrete time semantics", false);
+        SwitchArg atmcSwitch(L"a", L"atmc", L"aContinuous time semantics", false);
+        SwitchArg btmcSwitch(L"b", L"btmc", L"bDiscrete time semantics", false);
         cmd.xorAdd(atmcSwitch, btmcSwitch);
 
         // Parse the args.
@@ -24,6 +24,6 @@ int main(int argc, char **argv) {
 
     } catch (ArgException &e)  // catch any exceptions
     {
-        cerr << "error: " << e.error() << " for arg " << e.argId() << endl;
+        wcerr << L"error: " << e.error() << L" for arg " << e.argId() << endl;
     }
 }

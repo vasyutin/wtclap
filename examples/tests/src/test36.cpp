@@ -18,23 +18,23 @@
  *
  *****************************************************************************/
 
-#include "tclap/CmdLine.h"
-#include "tclap/DocBookOutput.h"
+#include "wtclap/CmdLine.h"
+#include "wtclap/DocBookOutput.h"
 
 using namespace TCLAP;
 
-int main(int argc, char **argv) {
+int wmain(int argc, wchar_t **argv) {
     DocBookOutput output;
-    CmdLine cmd("");
+    CmdLine cmd(L"");
     cmd.setOutput(&output);
 
-    ValueArg<int> arg0("a", "a_int", "int arg", false, 4711, "int", cmd);
-    ValueArg<int> arg1("b", "b_int", "int arg", false, 4711, "int", cmd);
+    ValueArg<int> arg0(L"a", L"a_int", L"int arg", false, 4711, L"int", cmd);
+    ValueArg<int> arg1(L"b", L"b_int", L"int arg", false, 4711, L"int", cmd);
     arg1.hideFromHelp();
 
-    ValueArg<int> arg2("c", "c_int", "int arg", false, 4711, "int");
+    ValueArg<int> arg2(L"c", L"c_int", L"int arg", false, 4711, L"int");
     arg2.hideFromHelp();
-    ValueArg<int> arg3("d", "d_int", "int arg", false, 4711, "int");
+    ValueArg<int> arg3(L"d", L"d_int", L"int arg", false, 4711, L"int");
     arg3.hideFromHelp();
 
     if (argc > 2) {
